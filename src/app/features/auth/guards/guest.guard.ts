@@ -9,7 +9,7 @@ export const guestGuard: CanActivateFn = () => {
 
   authStore.initialize();
 
-  if (!authStore.token()) {
+  if (!authStore.isAuthenticated()) {
     return true;
   }
 

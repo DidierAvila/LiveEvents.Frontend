@@ -9,7 +9,7 @@ export const authGuard: CanActivateFn = () => {
 
   authStore.initialize();
 
-  if (authStore.token()) {
+  if (authStore.isAuthenticated()) {
     return true;
   }
 
