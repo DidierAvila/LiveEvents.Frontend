@@ -41,3 +41,24 @@ http://localhost:8080
 2. Crear un `Web Service` desde Dockerfile.
 3. Exponer el puerto `8080`.
 4. Desplegar.
+
+## Despliegue sugerido en Netlify
+
+El proyecto ya incluye `netlify.toml`, por lo que Netlify puede detectar:
+
+- comando de build: `npm run build`
+- carpeta publicada: `dist/live-events-frontend/browser`
+- redireccion de SPA hacia `index.html`
+
+### Variables de entorno recomendadas en Netlify
+
+Cuando publiques el backend, configura estas variables:
+
+- `API_BASE_URL`: URL publica de la API de dominio. Ejemplo: `https://mi-backend.com/Api`
+- `AUTH_API_BASE_URL`: URL publica de autenticacion. Ejemplo: `https://mi-auth.com`
+
+### Notas
+
+- En local, el frontend sigue usando `localhost`.
+- En produccion, `npm run build` genera `environment.prod.ts` usando esas variables.
+- Si cambias las URLs del backend en Netlify, solo necesitas lanzar un nuevo deploy.
