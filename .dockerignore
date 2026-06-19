@@ -1,0 +1,11 @@
+node_modules
+dist
+.angular
+playwright-report
+test-results
+blob-report
+.git
+.gitignore
+.vscode
+npm-debug.log
+README.md
