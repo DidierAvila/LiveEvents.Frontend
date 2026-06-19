@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://localhost:7257/Api',
-  authApiBaseUrl: 'https://localhost:7154',
+  apiBaseUrl: 'https://liveevents-events.onrender.com/Api',
+  authApiBaseUrl: 'https://liveevents-auth.onrender.com',
 };
