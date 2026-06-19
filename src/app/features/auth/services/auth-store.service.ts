@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -202,9 +203,13 @@ export class AuthStoreService {
           map(() => void 0),
         );
       }),
-      catchError(() => {
-        this.logout(true);
-        return EMPTY;
+      catchError((error: unknown) => {
+        if (this.isUnauthorizedError(error)) {
+          this.logout(true);
+          return EMPTY;
+        }
+
+        return of(void 0);
       }),
       finalize(() => this.loadingProfileState.set(false)),
     );
@@ -253,6 +258,13 @@ export class AuthStoreService {
   private matchesAny(values: string[], fragments: string[]): boolean {
     return values.some((value) =>
       fragments.some((fragment) => value.includes(fragment)),
+    );
+  }
+
+  private isUnauthorizedError(error: unknown): boolean {
+    return (
+      error instanceof HttpErrorResponse &&
+      (error.status === 401 || error.status === 403)
     );
   }
 }
