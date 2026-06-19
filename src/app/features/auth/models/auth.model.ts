@@ -76,3 +76,78 @@ export interface MenuItem {
   description: string;
   icon: string;
 }
+
+export interface AuthUserSummary {
+  id: string;
+  name: string;
+  email: string;
+  image?: string | null;
+  firstRoleName?: string | null;
+  phone?: string | null;
+  userTypeId?: string;
+  userTypeName?: string | null;
+  address?: string | null;
+  createdAt?: string;
+  updatedAt?: string | null;
+  status?: boolean;
+}
+
+export interface AuthUsersListResult {
+  data: AuthUserSummary[];
+  totalRecords: number;
+  totalPages: number;
+  currentPage: number;
+  pageSize: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  sortBy?: string | null;
+}
+
+export interface AuthUserDetail extends AuthUserSummary {
+  additionalData?: unknown;
+  roleIds?: string[] | null;
+}
+
+export interface UpdateAuthUserRequest {
+  email: string | null;
+  name: string | null;
+  image: string | null;
+  phone: string | null;
+  userTypeId: string | null;
+  address: string | null;
+  additionalData: unknown | null;
+  roleIds: string[] | null;
+  status: boolean;
+}
+
+export interface AuthRoleSummary {
+  id: string;
+  name: string;
+  description?: string | null;
+  status: boolean;
+  userCount?: number;
+  permissionCount?: number;
+  createdAt?: string;
+}
+
+export interface AuthRolesListResult {
+  data: AuthRoleSummary[];
+  totalRecords: number;
+  totalPages: number;
+  currentPage: number;
+  pageSize: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  sortBy?: string | null;
+}
+
+export interface AuthRoleDetail extends AuthRoleSummary {
+  permissionIds?: string[] | null;
+}
+
+export interface UpdateAuthRoleRequest {
+  name: string;
+  description: string | null;
+  status: boolean;
+  permissionIds: string[] | null;
+}

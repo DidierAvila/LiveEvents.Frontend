@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
@@ -9,9 +9,15 @@ import {
 import {
   AccountProfile,
   ApiResponse,
+  AuthRoleDetail,
+  AuthRolesListResult,
+  AuthUserDetail,
+  AuthUsersListResult,
   JwtTokenPayload,
   LoginRequest,
   RolePermission,
+  UpdateAuthRoleRequest,
+  UpdateAuthUserRequest,
 } from '../models/auth.model';
 
 @Injectable({ providedIn: 'root' })
@@ -74,12 +80,44 @@ export class AuthService {
     );
   }
 
-  getUsers(params?: Record<string, string | number | boolean>): Observable<unknown> {
-    return this.http.get(`${this.baseUrl}/Users`, { params });
+  getUsers(page = 1, pageSize = 10): Observable<AuthUsersListResult> {
+    const params = new HttpParams()
+      .set('Page', String(page))
+      .set('PageSize', String(pageSize));
+
+    return this.http.get<AuthUsersListResult>(`${this.baseUrl}/Users`, { params });
   }
 
-  getRoles(params?: Record<string, string | number | boolean>): Observable<unknown> {
-    return this.http.get(`${this.baseUrl}/Roles`, { params });
+  getUserById(id: string): Observable<AuthUserDetail> {
+    return this.http.get<AuthUserDetail>(`${this.baseUrl}/Users/${id}`);
+  }
+
+  updateUser(id: string, payload: UpdateAuthUserRequest): Observable<unknown> {
+    return this.http.put(`${this.baseUrl}/Users/${id}`, payload);
+  }
+
+  deleteUser(id: string): Observable<unknown> {
+    return this.http.delete(`${this.baseUrl}/Users/${id}`);
+  }
+
+  getRoles(page = 1, pageSize = 10): Observable<AuthRolesListResult> {
+    const params = new HttpParams()
+      .set('Page', String(page))
+      .set('PageSize', String(pageSize));
+
+    return this.http.get<AuthRolesListResult>(`${this.baseUrl}/Roles`, { params });
+  }
+
+  getRoleById(id: string): Observable<AuthRoleDetail> {
+    return this.http.get<AuthRoleDetail>(`${this.baseUrl}/Roles/${id}`);
+  }
+
+  updateRole(id: string, payload: UpdateAuthRoleRequest): Observable<unknown> {
+    return this.http.put(`${this.baseUrl}/Roles/${id}`, payload);
+  }
+
+  deleteRole(id: string): Observable<unknown> {
+    return this.http.delete(`${this.baseUrl}/Roles/${id}`);
   }
 
   getPermissions(params?: Record<string, string | number | boolean>): Observable<unknown> {
